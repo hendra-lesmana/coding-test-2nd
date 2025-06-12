@@ -65,9 +65,9 @@ When you complete the assignment:
 
 ### 4. **Recommended Tech Stack**
    - **Document Processing**: PyPDF2, pdfplumber, or langchain Document Loaders
-   - **Embedding Models**: OpenAI embeddings, Sentence Transformers, or HuggingFace embeddings
+   - **Embedding Models**: Google Gemini embeddings, Sentence Transformers, or HuggingFace embeddings
    - **Vector Database**: ChromaDB (local), FAISS, or Pinecone
-   - **LLM**: OpenAI GPT, Google Gemini, Anthropic Claude, or open-source models
+   - **LLM**: Google Gemini (default), OpenAI GPT, Anthropic Claude, or open-source models
    - **Frameworks**: LangChain or LlamaIndex (for RAG pipeline construction)
 
 ### 5. **Bonus Features (Optional)**
@@ -83,16 +83,16 @@ When you complete the assignment:
 ## Free LLM APIs and Embedding Services
 
 ### LLM Services
-- **OpenAI API**: GPT-3.5/4 (free credits provided)
-- **Google Gemini API**: Free tier available
+- **Google Gemini API**: Free tier available (recommended)
+- **OpenAI API**: GPT-3.5/4 (requires payment)
 - **Anthropic Claude**: Free credits provided
 - **Cohere**: Free API available
 - **Hugging Face**: Free open-source models
 
 ### Embedding Services
-- **OpenAI Embeddings**: text-embedding-ada-002
-- **Cohere Embeddings**: Free tier available
+- **Google Gemini Embeddings**: models/embedding-001 (free tier)
 - **Sentence Transformers**: Open-source models for local execution
+- **OpenAI Embeddings**: text-embedding-ada-002 (requires payment)
 - **Hugging Face Embeddings**: Various free models available
 
 ### Vector Databases
@@ -156,12 +156,11 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 cd backend
 
 # Install dependencies
-pip install -r requirements.txt
+pip install -r ../requirements.txt
 
-# Set up environment variables (create .env file)
-OPENAI_API_KEY=your_openai_api_key
-VECTOR_DB_PATH=./vector_store
-PDF_UPLOAD_PATH=../data
+# Set up environment variables
+# Edit the .env file and add your Google Gemini API key
+GOOGLE_API_KEY=your_google_api_key_here
 
 # Run server
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
@@ -178,17 +177,19 @@ npm install
 npm run dev
 ```
 
-**Note**: If you encounter TypeScript/linting errors:
-- Make sure `npm install` completed successfully
-- The project includes all necessary configuration files (`tsconfig.json`, `.eslintrc.json`, `next-env.d.ts`)
-- Check that all dependencies are properly installed in `node_modules`
+### 4. **Access the Application**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- API Documentation: http://localhost:8000/docs
 
-### 4. **Initial Data Processing**
-```bash
-# Process and vectorize PDF file via API
-curl -X POST "http://localhost:8000/api/upload" \
-     -F "file=@../data/FinancialStatement_2025_I_AADIpdf.pdf"
-```
+### 5. **Using the Application**
+1. Open http://localhost:3000 in your browser
+2. Upload a PDF financial statement using the upload area
+3. Wait for the document to be processed (this may take a few moments)
+4. Start asking questions about the financial data in the chat interface
+5. Get AI-powered answers with source references
+
+**Note**: Make sure you have a valid Google Gemini API key set in the backend/.env file before starting the backend server.
 
 ---
 
