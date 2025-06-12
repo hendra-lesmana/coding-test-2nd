@@ -100,80 +100,70 @@ export default function ChatInterface({ isDocumentUploaded, onError }: ChatInter
     setInput(e.target.value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
   const formatTimestamp = (timestamp: Date) => {
     return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   if (!isDocumentUploaded) {
     return (
-      <div className="chat-interface bg-white rounded-lg shadow-md p-6">
-        <div className="text-center py-12">
-          <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="chat-interface bg-gray-800 rounded p-3 flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <svg className="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Ready to Chat</h3>
-          <p className="text-gray-500">Upload a financial statement PDF to start asking questions about it.</p>
+          <h3 className="text-sm font-medium text-white mb-1">Ready to Chat</h3>
+          <p className="text-xs text-gray-400">Upload a PDF to start asking questions</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="chat-interface bg-white rounded-lg shadow-md flex flex-col h-96">
-      {/* Header */}
-      <div className="border-b border-gray-200 p-4">
-        <h3 className="text-lg font-semibold text-gray-800">Financial Q&A Assistant</h3>
-        <p className="text-sm text-gray-600">Ask questions about your financial statement</p>
+    <div className="chat-interface bg-gray-800 rounded flex flex-col flex-1 min-h-0">
+      {/* Compact Header */}
+      <div className="border-b border-gray-700 p-2">
+        <h3 className="text-sm font-semibold text-white">Financial Q&A</h3>
+        <p className="text-xs text-gray-400">Ask questions about your document</p>
       </div>
 
       {/* Messages display area */}
-      <div className="messages flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="messages flex-1 overflow-y-auto p-2 space-y-2 min-h-0">
         {messages.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-gray-500 mb-4">Start by asking a question about your financial statement!</p>
-            <div className="text-sm text-gray-400 space-y-1">
-              <p>Try asking:</p>
-              <p>• "What is the total revenue for 2025?"</p>
-              <p>• "What are the main cost items?"</p>
-              <p>• "How is the cash flow situation?"</p>
+          <div className="text-center py-4">
+            <p className="text-gray-400 mb-2 text-sm">Ask a question about your document!</p>
+            <div className="text-xs text-gray-500">
+              <p>Try: "What is the revenue?" or "How is cash flow?"</p>
             </div>
           </div>
         ) : (
           messages.map((message) => (
             <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-3/4 rounded-lg p-3 ${
+              <div className={`max-w-3/4 rounded p-2 text-sm ${
                 message.type === 'user'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-800'
+                  : 'bg-gray-700 text-gray-100'
               }`}>
                 <div className="whitespace-pre-wrap">{message.content}</div>
 
-                {/* Sources for assistant messages */}
+                {/* Compact Sources for assistant messages */}
                 {message.type === 'assistant' && message.sources && message.sources.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-gray-300">
-                    <p className="text-xs font-medium text-gray-600 mb-2">Sources:</p>
+                  <div className="mt-2 pt-2 border-t border-gray-600">
+                    <p className="text-xs font-medium text-gray-300 mb-1">Sources:</p>
                     <div className="space-y-1">
                       {message.sources.map((source, index) => (
-                        <div key={index} className="text-xs bg-white rounded p-2 border">
-                          <div className="flex justify-between items-center mb-1">
+                        <div key={index} className="text-xs bg-gray-600 rounded p-1">
+                          <div className="flex justify-between items-center">
                             <span className="font-medium">Page {source.page}</span>
-                            <span className="text-gray-500">Score: {source.score}</span>
+                            <span className="text-gray-400">Score: {source.score.toFixed(2)}</span>
                           </div>
-                          <p className="text-gray-700">{source.content.substring(0, 150)}...</p>
+                          <p className="text-gray-300 mt-1">{source.content.substring(0, 100)}...</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
 
-                <div className="text-xs opacity-75 mt-2">
+                <div className="text-xs opacity-75 mt-1">
                   {formatTimestamp(message.timestamp)}
                 </div>
               </div>
@@ -181,13 +171,13 @@ export default function ChatInterface({ isDocumentUploaded, onError }: ChatInter
           ))
         )}
 
-        {/* Loading indicator */}
+        {/* Compact Loading indicator */}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-gray-100 rounded-lg p-3">
+            <div className="bg-gray-700 rounded p-2 text-sm">
               <div className="flex items-center space-x-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                <span className="text-gray-600">Thinking...</span>
+                <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-400"></div>
+                <span className="text-gray-300">Thinking...</span>
               </div>
             </div>
           </div>
@@ -196,29 +186,34 @@ export default function ChatInterface({ isDocumentUploaded, onError }: ChatInter
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
-      <div className="border-t border-gray-200 p-4">
+      {/* Compact Input area */}
+      <div className="border-t border-gray-700 p-2">
         <div className="flex space-x-2">
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask a question about your financial statement..."
-            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+              }
+            }}
+            placeholder="Ask about your document..."
+            className="flex-1 border border-gray-600 rounded px-2 py-1 text-sm bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
             disabled={isLoading}
           />
           <button
             onClick={handleSendMessage}
             disabled={!input.trim() || isLoading}
-            className={`px-4 py-2 rounded-md font-medium transition-colors ${
+            className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
               !input.trim() || isLoading
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 : 'bg-blue-600 text-white hover:bg-blue-700'
             }`}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
             </svg>
           </button>
