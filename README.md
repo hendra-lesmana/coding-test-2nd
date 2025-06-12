@@ -2,12 +2,14 @@
 
 ## Overview
 Build a full-stack application using **RAG (Retrieval Augmented Generation)** technology:
-1. **Next.js** as the frontend framework
+1. **Next.js** as the frontend framework with **compact dark theme UI**
 2. **FastAPI** as the backend API layer
 3. **PDF financial statement document** based intelligent Q&A system
 4. **Vector database** for document search and generative AI
 
 Parse and embed the provided **`FinancialStatement_2025_I_AADIpdf.pdf`** file, then build a system where users can ask questions about the financial statement and AI generates answers by retrieving relevant information.
+
+✨ **Features a modern, compact dark theme interface with no scrolling** - everything fits in a single screen view for optimal user experience.
 
 ---
 
@@ -140,7 +142,176 @@ coding-test-2nd/
 
 ## Getting Started
 
-### 1. **Environment Setup**
+### 🚀 **Quick Start (Recommended)**
+
+The easiest way to run the application is using the provided scripts:
+
+#### **Option 1: One-Command Setup (Easiest)**
+
+**Windows Users:**
+```bash
+# Clone repository
+git clone <your-repository-url>
+cd coding-test-2nd
+
+# Install dependencies and run the application
+install_all_dependencies.bat
+# Then run:
+start_app.bat
+```
+
+**Unix/Linux/macOS Users:**
+```bash
+# Clone repository
+git clone <your-repository-url>
+cd coding-test-2nd
+
+# Make scripts executable
+chmod +x *.sh
+
+# Install dependencies and run the application
+./install_all_dependencies.sh
+# Then run:
+./start_app.sh
+```
+
+#### **Option 2: Direct Run (Dependencies Auto-Installed)**
+
+**Windows Users:**
+```bash
+# Clone and run directly (auto-installs dependencies)
+git clone <your-repository-url>
+cd coding-test-2nd
+start_app.bat
+```
+
+**Unix/Linux/macOS Users:**
+```bash
+# Clone and run directly (auto-installs dependencies)
+git clone <your-repository-url>
+cd coding-test-2nd
+chmod +x *.sh
+./start_app.sh
+```
+
+The scripts will automatically:
+- ✅ **Set up Python virtual environment**
+- ✅ **Install all dependencies** (Python and Node.js)
+- ✅ **Create configuration files** (.env setup)
+- ✅ **Start both services** (backend and frontend)
+- ✅ **Open browser** automatically to http://localhost:3000
+
+### 📋 **Available Scripts**
+
+#### **Dependency Installation Scripts**
+| Script | Purpose | Platform |
+|--------|---------|----------|
+| `install_all_dependencies.bat` / `install_all_dependencies.sh` | **Install all dependencies** - Backend + Frontend | Windows / Unix |
+| `install_backend_dependencies.bat` / `install_backend_dependencies.sh` | Install backend dependencies only | Windows / Unix |
+| `install_frontend_dependencies.bat` / `install_frontend_dependencies.sh` | Install frontend dependencies only | Windows / Unix |
+
+#### **Application Startup Scripts**
+| Script | Purpose | Platform |
+|--------|---------|----------|
+| `start_app.bat` / `start_app.sh` | **Main script** - Starts both services | Windows / Unix |
+| `start_backend_only.bat` / `start_backend_only.sh` | Backend only | Windows / Unix |
+| `start_frontend_only.bat` / `start_frontend_only.sh` | Frontend only | Windows / Unix |
+
+### 🔧 **Dependency Installation (Separate Step)**
+
+If you prefer to install dependencies separately before running the application:
+
+#### **Install All Dependencies**
+**Windows:**
+```bash
+install_all_dependencies.bat
+```
+
+**Unix/Linux/macOS:**
+```bash
+./install_all_dependencies.sh
+```
+
+#### **Install Individual Dependencies**
+**Backend Only:**
+```bash
+# Windows
+install_backend_dependencies.bat
+
+# Unix/Linux/macOS
+./install_backend_dependencies.sh
+```
+
+**Frontend Only:**
+```bash
+# Windows
+install_frontend_dependencies.bat
+
+# Unix/Linux/macOS
+./install_frontend_dependencies.sh
+```
+
+### 🛠️ **What the Dependency Installation Scripts Do**
+
+#### **Backend Dependencies (`install_backend_dependencies.*`)**
+- ✅ **Creates Python virtual environment** (if not exists)
+- ✅ **Activates virtual environment**
+- ✅ **Installs Python packages** from requirements.txt
+- ✅ **Creates .env configuration file** from template
+- ✅ **Validates Python installation**
+
+#### **Frontend Dependencies (`install_frontend_dependencies.*`)**
+- ✅ **Validates Node.js and npm installation**
+- ✅ **Installs all Node.js packages** (Next.js, React, TypeScript, etc.)
+- ✅ **Verifies installation success**
+- ✅ **Sets up development environment**
+
+#### **All Dependencies (`install_all_dependencies.*`)**
+- ✅ **Combines both backend and frontend installation**
+- ✅ **Provides comprehensive setup in one command**
+- ✅ **Includes error handling and validation**
+- ✅ **Shows next steps after installation**
+
+### ⚙️ **Configuration Required**
+
+After installation, set up your API keys:
+
+1. **Edit `backend/.env`** (created automatically by scripts):
+   ```env
+   # Choose one of the following:
+   GEMINI_API_KEY=your_gemini_api_key_here
+   # OR
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+2. **Get API Keys**:
+   - **Google Gemini**: https://makersuite.google.com/app/apikey (Free tier available)
+   - **OpenAI**: https://platform.openai.com/api-keys (Requires payment)
+
+### 🌐 **Access Points**
+After starting the application:
+- **Frontend (Main App)**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+
+### 🎯 **Using the Application**
+1. **Open** http://localhost:3000 in your browser (opens automatically)
+2. **Upload** a PDF financial statement using the compact upload area
+3. **Wait** for document processing (progress shown)
+4. **Ask questions** about the financial data in the dark theme chat interface
+5. **Get AI-powered answers** with source references
+
+### 🛑 **Stopping the Application**
+- **Windows**: Close the terminal windows or press Ctrl+C in each
+- **Unix/Linux/macOS**: Press Ctrl+C in the terminal (stops both services)
+
+---
+
+### 🔧 **Manual Setup (Alternative)**
+
+If you prefer manual setup or the scripts don't work:
+
+#### **1. Environment Setup**
 ```bash
 # Clone repository
 git clone <your-repository-url>
@@ -151,7 +322,7 @@ python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
-### 2. **Backend Setup**
+#### **2. Backend Setup**
 ```bash
 cd backend
 
@@ -159,14 +330,14 @@ cd backend
 pip install -r ../requirements.txt
 
 # Set up environment variables
-# Edit the .env file and add your Google Gemini API key
-GOOGLE_API_KEY=your_google_api_key_here
+# Edit the .env file and add your API key
+GEMINI_API_KEY=your_gemini_api_key_here
 
 # Run server
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 3. **Frontend Setup**
+#### **3. Frontend Setup**
 ```bash
 cd frontend
 
@@ -176,20 +347,6 @@ npm install
 # Run development server
 npm run dev
 ```
-
-### 4. **Access the Application**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
-
-### 5. **Using the Application**
-1. Open http://localhost:3000 in your browser
-2. Upload a PDF financial statement using the upload area
-3. Wait for the document to be processed (this may take a few moments)
-4. Start asking questions about the financial data in the chat interface
-5. Get AI-powered answers with source references
-
-**Note**: Make sure you have a valid Google Gemini API key set in the backend/.env file before starting the backend server.
 
 ---
 
@@ -309,7 +466,108 @@ Your system should be able to handle questions like these about the financial st
 
 ## Troubleshooting
 
-### Common Issues
+### Dependency Installation Issues
+
+**Python not found during installation**:
+```bash
+# Windows: Install Python 3.8+ from python.org
+# Make sure to check "Add Python to PATH" during installation
+
+# Unix/Linux: Install Python 3.8+
+sudo apt update && sudo apt install python3 python3-pip python3-venv  # Ubuntu/Debian
+sudo yum install python3 python3-pip  # CentOS/RHEL
+brew install python3  # macOS with Homebrew
+
+# Verify installation:
+python --version  # or python3 --version
+```
+
+**Node.js not found during installation**:
+```bash
+# Install Node.js 16+ from nodejs.org
+# Or use package managers:
+
+# Windows: Use installer from nodejs.org
+# Unix/Linux:
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs  # Ubuntu/Debian
+
+# macOS:
+brew install node
+
+# Verify installation:
+node --version
+npm --version
+```
+
+**Virtual environment creation fails**:
+```bash
+# Windows:
+python -m pip install --upgrade pip
+python -m pip install virtualenv
+
+# Unix/Linux/macOS:
+python3 -m pip install --upgrade pip
+python3 -m pip install virtualenv
+```
+
+**npm install fails**:
+```bash
+# Clear npm cache and try again:
+npm cache clean --force
+npm install
+
+# If still failing, delete node_modules and try:
+rm -rf node_modules package-lock.json  # Unix/Linux/macOS
+rmdir /s node_modules & del package-lock.json  # Windows
+npm install
+```
+
+### Startup Script Issues
+
+**Scripts not working on Windows**:
+```bash
+# Try running from Command Prompt as Administrator
+# Or use PowerShell:
+powershell -ExecutionPolicy Bypass -File start_app.bat
+```
+
+**Permission denied on Unix/Linux/macOS**:
+```bash
+# Make scripts executable:
+chmod +x *.sh
+
+# If still having issues, run with bash:
+bash start_app.sh
+```
+
+**Port already in use**:
+```bash
+# Kill processes on ports 3000 and 8000
+# Windows:
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# Unix/Linux/macOS:
+lsof -ti:3000 | xargs kill -9
+lsof -ti:8000 | xargs kill -9
+```
+
+**Python not found**:
+- Install Python 3.8+ from [python.org](https://python.org)
+- Ensure Python is in your system PATH
+- Try `python3` instead of `python` on Unix systems
+
+**Node.js not found**:
+- Install Node.js 16+ from [nodejs.org](https://nodejs.org)
+- Ensure npm is available in your PATH
+
+### Common Application Issues
+
+**API Key Errors**:
+- Check that `backend/.env` file exists and contains valid API keys
+- Verify API key format (no extra spaces or quotes)
+- Test API key with the test scripts: `python test_gemini.py`
 
 **Frontend TypeScript Errors**:
 - Ensure `npm install` was completed successfully
@@ -324,6 +582,11 @@ Your system should be able to handle questions like these about the financial st
 **CORS Issues**:
 - Ensure backend CORS settings allow frontend origin
 - Check that API endpoints are accessible from frontend
+
+**Document Upload Issues**:
+- Ensure PDF file is less than 50MB
+- Check that the backend vector store directory has write permissions
+- Verify that the embedding service is working correctly
 
 ---
 
