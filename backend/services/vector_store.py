@@ -91,15 +91,18 @@ class VectorStoreService:
             raise
 
     def similarity_search(self, query: str, k: int = None) -> List[Tuple[Document, float]]:
-        """Search for similar documents"""
+        """Search for similar documents with optional deduplication"""
         try:
             if k is None:
                 k = settings.retrieval_k
 
             logger.info(f"Searching for similar documents with query: '{query[:100]}...' (k={k})")
 
+            # Retrieve more documents initially to allow for deduplication
+            search_k = k * 2 if settings.enable_source_deduplication else k
+
             # Perform similarity search with scores
-            results = self.vector_store.similarity_search_with_score(query, k=k)
+            results = self.vector_store.similarity_search_with_score(query, k=search_k)
 
             # Filter by similarity threshold
             filtered_results = [
@@ -107,12 +110,42 @@ class VectorStoreService:
                 if score >= settings.similarity_threshold
             ]
 
+            # Apply basic deduplication at retrieval level if enabled
+            if settings.enable_source_deduplication:
+                filtered_results = self._deduplicate_at_retrieval(filtered_results, k)
+
             logger.info(f"Found {len(filtered_results)} documents above similarity threshold")
             return filtered_results
 
         except Exception as e:
             logger.error(f"Error performing similarity search: {str(e)}")
             raise
+
+    def _deduplicate_at_retrieval(self, results: List[Tuple[Document, float]], target_k: int) -> List[Tuple[Document, float]]:
+        """Basic deduplication at retrieval level to avoid obvious duplicates"""
+        if not results:
+            return results
+
+        deduplicated = []
+        seen_pages = set()
+        page_counts = {}
+
+        for doc, score in results:
+            page_num = doc.metadata.get('page', 0)
+
+            # Limit sources per page at retrieval level
+            if page_counts.get(page_num, 0) >= settings.max_sources_per_page:
+                continue
+
+            deduplicated.append((doc, score))
+            page_counts[page_num] = page_counts.get(page_num, 0) + 1
+
+            # Stop when we have enough results
+            if len(deduplicated) >= target_k:
+                break
+
+        logger.debug(f"Retrieval deduplication: {len(results)} -> {len(deduplicated)}")
+        return deduplicated
 
     def delete_documents(self, document_ids: List[str]) -> None:
         """Delete documents from vector store"""

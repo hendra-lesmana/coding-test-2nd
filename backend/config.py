@@ -30,6 +30,11 @@ class Settings(BaseSettings):
     retrieval_k: int = int(os.getenv("RETRIEVAL_K", "5"))
     similarity_threshold: float = float(os.getenv("SIMILARITY_THRESHOLD", "0.7"))
 
+    # Source deduplication configuration
+    enable_source_deduplication: bool = os.getenv("ENABLE_SOURCE_DEDUPLICATION", "True").lower() == "true"
+    content_similarity_threshold: float = float(os.getenv("CONTENT_SIMILARITY_THRESHOLD", "0.75"))
+    max_sources_per_page: int = int(os.getenv("MAX_SOURCES_PER_PAGE", "2"))
+
     # Server configuration
     host: str = os.getenv("HOST", "0.0.0.0")
     port: int = int(os.getenv("PORT", "8000"))

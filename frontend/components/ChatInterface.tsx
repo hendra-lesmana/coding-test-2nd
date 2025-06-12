@@ -148,7 +148,12 @@ export default function ChatInterface({ isDocumentUploaded, onError }: ChatInter
                 {/* Compact Sources for assistant messages */}
                 {message.type === 'assistant' && message.sources && message.sources.length > 0 && (
                   <div className="mt-2 pt-2 border-t border-gray-600">
-                    <p className="text-xs font-medium text-gray-300 mb-1">Sources:</p>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs font-medium text-gray-300">Sources:</p>
+                      <span className="text-xs text-gray-500">
+                        {message.sources.length} unique
+                      </span>
+                    </div>
                     <div className="space-y-1">
                       {message.sources.map((source, index) => (
                         <div key={index} className="text-xs bg-gray-600 rounded p-1">
