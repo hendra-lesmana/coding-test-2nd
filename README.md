@@ -11,6 +11,29 @@ Parse and embed the provided **`FinancialStatement_2025_I_AADIpdf.pdf`** file, t
 
 ✨ **Features a modern, compact dark theme interface with no scrolling** - everything fits in a single screen view for optimal user experience.
 
+## Application Showcase
+
+### Financial Q&A System Interface
+The system provides an intuitive dark theme interface where users can upload PDFs and ask financial questions with AI-powered responses.
+
+![Application Showcase 1](./data/showcase_1.png)
+*Main interface showing PDF upload area and chat interface with sample financial questions*
+
+![Application Showcase 2](./data/showcase_2.png)
+*Example Q&A interaction demonstrating revenue analysis with detailed AI responses and source references*
+
+![Application Showcase 3](./data/showcase_3.png)
+*Advanced financial analysis showing cash flow breakdown with multiple source citations and page references*
+
+### Key Features Demonstrated:
+- **📄 PDF Upload**: Simple drag-and-drop interface with processing status and file management
+- **💬 Interactive Chat**: Real-time Q&A with comprehensive financial document analysis
+- **📊 Source References**: Each answer includes relevant page references, similarity scores, and chunk information
+- **🎯 Smart Retrieval**: Advanced RAG system ensures accurate and contextual responses
+- **⚡ Fast Processing**: Quick response times with detailed processing time indicators
+- **🌙 Modern UI**: Compact dark theme interface optimized for financial analysis workflows
+- **📈 Financial Intelligence**: Specialized for handling complex financial statement queries
+
 ---
 
 ## How to Complete This Assignment
